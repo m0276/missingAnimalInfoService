@@ -1,9 +1,12 @@
 package MJ.missingAnimalInfo.service;
 
+import MJ.missingAnimalInfo.dto.FavDto;
 import MJ.missingAnimalInfo.dto.request.FavRequest;
 import MJ.missingAnimalInfo.entity.Fav;
 import MJ.missingAnimalInfo.mapper.FavMapper;
 import MJ.missingAnimalInfo.repository.FavRepo;
+import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,5 +48,10 @@ public class FavService {
       e.printStackTrace();
       return false;
     }
+  }
+
+  public List<FavDto> getFavLists(){
+    //login user id
+    return favMapper.toDtoLists(favRepo.getFavsByUserId(UUID.randomUUID()));
   }
 }
