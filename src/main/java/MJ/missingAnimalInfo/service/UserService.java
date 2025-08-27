@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +19,7 @@ public class UserService {
   private final UserRepo userRepo;
   private final UserMapper userMapper;
 
+  @Transactional
   public UserDto saveUser(UserCreateRequest userCreateRequest){
     User user = userRepo.save(User.builder()
         .username(userCreateRequest.username())
@@ -28,6 +30,7 @@ public class UserService {
   }
 
 
+  @Transactional
   public void deleteUser(UUID userId){
     try{
       userRepo.deleteById(userId);
@@ -41,6 +44,7 @@ public class UserService {
     return null;
   }
 
+  @Transactional
   public UserDto updateUser(UserUpdateRequest updateRequest){
     User user = userRepo.findById(/*loginuser*/UUID.randomUUID())
         .orElseThrow(NoSuchElementException::new);
