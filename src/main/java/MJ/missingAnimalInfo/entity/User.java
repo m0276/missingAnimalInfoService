@@ -7,9 +7,17 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.List;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
+@Builder
 @Table(name = "user")
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
   @Id
   UUID id = UUID.randomUUID();
@@ -21,4 +29,12 @@ public class User {
   @Column(name = "fav_id")
   @OneToMany
   List<Fav> favList;
+
+  public void setUsername(String username){
+    this.username = username;
+  }
+
+  public void setPassword(String password){
+    this.password = password;
+  }
 }

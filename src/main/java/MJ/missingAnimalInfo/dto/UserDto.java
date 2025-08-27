@@ -11,8 +11,5 @@ import lombok.Setter;
 public class UserDto {
   UUID id;
   String username;
-
-  String password;
-
   List<FavDto> favList;
 }
