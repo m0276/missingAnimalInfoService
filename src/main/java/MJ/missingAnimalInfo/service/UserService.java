@@ -8,6 +8,8 @@ import MJ.missingAnimalInfo.mapper.UserMapper;
 import MJ.missingAnimalInfo.repository.UserRepo;
 import java.util.NoSuchElementException;
 import java.util.UUID;
+
+import MJ.missingAnimalInfo.util.LoginUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,27 +33,32 @@ public class UserService {
 
 
   @Transactional
-  public void deleteUser(UUID userId){
+  public void deleteUser(){
     try{
-      userRepo.deleteById(userId);
+      userRepo.deleteById(findUserId());
     } catch (Exception e){
       throw new NoSuchElementException("해당하는 사용자가 없습니다.");
     }
   }
 
   public UserDto getUserInfo(){
-    // login user 받아오기
-    return null;
+    String username = LoginUtil.getCurrentUser();
+    return userMapper.toDto(userRepo.findByUsername(username)
+            .orElseThrow(NoSuchElementException::new));
   }
 
   @Transactional
   public UserDto updateUser(UserUpdateRequest updateRequest){
-    User user = userRepo.findById(/*loginuser*/UUID.randomUUID())
-        .orElseThrow(NoSuchElementException::new);
+    User user = userRepo.findById(findUserId()).orElseThrow(NoSuchElementException::new);
     if(updateRequest.getUsername() != null) user.setUsername(updateRequest.getUsername());
     if(updateRequest.getPassword() != null) user.setPassword(updateRequest.getPassword());
 
     return userMapper.toDto(user);
+  }
+
+  public UUID findUserId(){
+      return userRepo.findByUsername(LoginUtil.getCurrentUser())
+              .orElseThrow(NoSuchElementException::new).getId();
   }
 
 }

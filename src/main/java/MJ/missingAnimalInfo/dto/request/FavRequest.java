@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FavRequest {
-  UUID userId;
-  String savedId;
+    String savedId;
   FavType type;
 }

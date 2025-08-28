@@ -17,10 +17,11 @@ public class FavService {
 
   private final FavRepo favRepo;
   private final FavMapper favMapper;
+  private final UserService userService;
 
   @Transactional
   public boolean checkSaveOrDelete(FavRequest favRequest){
-    if(favRepo.findBySavedIdAndUserId(favRequest.getSavedId(),favRequest.getUserId()).isEmpty())
+    if(favRepo.findBySavedIdAndUserId(favRequest.getSavedId(),userService.findUserId()).isEmpty())
       return saveFav(favRequest);
     else return deleteFav(favRequest);
   }
@@ -28,7 +29,7 @@ public class FavService {
   private boolean saveFav(FavRequest favRequest){
     try{
       favRepo.save(Fav.builder().savedId(favRequest.getSavedId())
-          .userId(favRequest.getUserId())
+          .userId(userService.findUserId())
           .type(favRequest.getType())
           .build());
 
@@ -41,7 +42,7 @@ public class FavService {
 
   private boolean deleteFav(FavRequest favRequest){
     try{
-      favRepo.deleteByUserIdAndSavedId(favRequest.getUserId(), favRequest.getSavedId());
+      favRepo.deleteByUserIdAndSavedId(userService.findUserId(), favRequest.getSavedId());
       return true;
     }
     catch (Exception e){
@@ -51,7 +52,6 @@ public class FavService {
   }
 
   public List<FavDto> getFavLists(){
-    //login user id
-    return favMapper.toDtoLists(favRepo.getFavsByUserId(UUID.randomUUID()));
+    return favMapper.toDtoLists(favRepo.getFavsByUserId(userService.findUserId()));
   }
 }

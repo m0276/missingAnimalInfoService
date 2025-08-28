@@ -1,5 +1,6 @@
 package MJ.missingAnimalInfo.entity;
 
+import MJ.missingAnimalInfo.config.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -29,6 +30,8 @@ public class User {
   @Column(name = "fav_id")
   @OneToMany
   List<Fav> favList;
+
+  List<Role> roles;
 
   public void setUsername(String username){
     this.username = username;
