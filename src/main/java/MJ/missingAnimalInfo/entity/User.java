@@ -20,16 +20,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-  @Id
+  @Id @Builder.Default
   UUID id = UUID.randomUUID();
 
   String username;
 
   String password;
-
-  @Column(name = "fav_id")
-  @OneToMany
-  List<Fav> favList;
 
   List<Role> roles;
 

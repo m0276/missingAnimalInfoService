@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Fav {
-  @Id
+  @Id @Builder.Default
   UUID id = UUID.randomUUID();
 
   @Column @Enumerated(value = EnumType.STRING)
@@ -28,6 +28,7 @@ public class Fav {
 
   String savedId;
 
+  @Column(name = "user_id")
   UUID userId;
 
 }
