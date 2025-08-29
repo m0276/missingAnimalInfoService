@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 public class SiCode {
     @Id
-    String code;
+    String orgCd;
 
-    String sidoName;
+    String orgdownNm;
 }
