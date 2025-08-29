@@ -3,6 +3,7 @@ package MJ.missingAnimalInfo.util;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 import MJ.missingAnimalInfo.entity.User;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,9 +32,7 @@ public class UserPrincipal implements UserDetails, Serializable {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.name()))
-                .toList();
+        return List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
     }
 
     @Override public boolean isAccountNonExpired() { return true; }

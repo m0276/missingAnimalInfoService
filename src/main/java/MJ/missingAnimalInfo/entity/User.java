@@ -1,11 +1,8 @@
 package MJ.missingAnimalInfo.entity;
 
 import MJ.missingAnimalInfo.config.Role;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -27,7 +24,8 @@ public class User {
 
   String password;
 
-  List<Role> roles;
+  @Column @Enumerated(EnumType.STRING)
+  Role role;
 
   public void setUsername(String username){
     this.username = username;
